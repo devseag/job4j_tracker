@@ -13,6 +13,12 @@ public class Car {
         System.out.println("Engine is started");
     }
 
+    public static TripComputer getTripComputer() {
+        Car car = new Car("Serial", "Model");
+        Car.TripComputer tripComputer = car.new TripComputer();
+        return tripComputer;
+    }
+
     public class Transmission {
 
         public void accelerate() {
