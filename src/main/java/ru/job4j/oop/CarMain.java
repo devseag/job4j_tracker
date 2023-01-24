@@ -11,6 +11,7 @@ public class CarMain {
         brakes.brake();
         Car.TripComputer tripComputer = car.new TripComputer();
         tripComputer.getInfo();
+        System.out.println(Car.Manual.getManual());
     }
 
 }
