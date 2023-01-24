@@ -58,8 +58,5 @@ public class Car {
             Car car = new Car("Serial", "Model");
             return "Model: " + car.model + ", Instruction: " + carManual;
         }
-
     }
-
-
 }

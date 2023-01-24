@@ -8,7 +8,7 @@ public class Max {
 
     public static int max(int left, int right, int third) {
         //int result = third > max(left, right) ? third : max(left, right);
-        return max(max(left,right), third);
+        return max(max(left, right), third);
     }
 
     public static int max(int left, int right, int third, int fourth) {

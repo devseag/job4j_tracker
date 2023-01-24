@@ -17,6 +17,7 @@ public class Point {
 
     /**
      * Конструктор, который принимает начальное состояние объекта "точка"
+     *
      * @param first координата x
      * @param second координата y
      */
@@ -43,6 +44,6 @@ public class Point {
     }
 
     public double distance3d(Point that) {
-        return sqrt(pow(this.x - that.x, 2) + pow(this.y - that.y, 2)+ pow(this.z - that.z, 2));
+        return sqrt(pow(this.x - that.x, 2) + pow(this.y - that.y, 2) + pow(this.z - that.z, 2));
     }
 }

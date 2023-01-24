@@ -24,6 +24,4 @@ public class OverloadRunner {
         System.out.println("Your name: " + name);
         System.out.println("Your age: " + age);
     }
-
-
 }
