@@ -58,8 +58,20 @@ public class Tracker {
         if (rsl) {
             item.setId(id);
             items[index] = item;
-            items[index].setId(id);
+            //items[index].setId(id);
         }
         return rsl;
+    }
+
+    public boolean delete(int id) {
+        int index = indexOf(id);
+        if (index != -1) {
+            System.arraycopy(items, index + 1, items, index, size - index - 1);
+            items[size - 1] = null;
+            size--;
+            return true;
+        }
+        return false;
+
     }
 }
