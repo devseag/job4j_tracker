@@ -49,6 +49,16 @@ public class StartUI {
                 } else {
                     System.out.println("Error while deleting item.");
                 }
+            } else if (select == 4) {
+                System.out.println("=== Find item by id ===");
+                System.out.print("Enter id: ");
+                int id = Integer.parseInt(scanner.nextLine());
+                Item item = tracker.findById(id);
+                if (item != null) {
+                    System.out.println(item);
+                } else {
+                    System.out.println("Item with id: " + id + " is not found.");
+                }
             } else if (select == 6) {
                 run = false;
             }
