@@ -40,6 +40,15 @@ public class StartUI {
                 } else {
                     System.out.println("Error while editing item.");
                 }
+            } else if (select == 3) {
+                System.out.println("=== Delete item ===");
+                System.out.print("Enter id: ");
+                int id = Integer.parseInt(scanner.nextLine());
+                if (tracker.delete(id)) {
+                    System.out.println("Item deleted successfully.");
+                } else {
+                    System.out.println("Error while deleting item.");
+                }
             } else if (select == 6) {
                 run = false;
             }
