@@ -22,4 +22,9 @@ public class TownCar implements Vehicle {
         System.out.println("Standartnaja tormoznaja sistema");
     }
 
+    @Override
+    public void refill() {
+        System.out.println("Zapravit' 60l benzina");
+    }
+
 }
