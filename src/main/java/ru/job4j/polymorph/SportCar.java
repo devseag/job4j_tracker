@@ -26,4 +26,9 @@ public class SportCar implements Vehicle {
     public void refill() {
         System.out.println("Zapravit' 100l benzina");
     }
+
+    @Override
+    public void chargeBattery() {
+        System.out.println("Akkumuljator v bagazhnike. Zarjadit'.");
+    }
 }
