@@ -20,8 +20,14 @@ public class MaxTest {
         assertThat(Max.max(4, 4), is(4));
     }
 
+//    @Test
+//    public void whenNegativeNumber() {
+//        assertThat(Max.max(-2, -1), is(-1));
+//    }
+    // for MAVEN:
+
     @Test
     public void whenNegativeNumber() {
-        assertThat(Max.max(-2, -1), is(-1));
+        assertThat(Max.max(-2, -1), is(2));
     }
 }
