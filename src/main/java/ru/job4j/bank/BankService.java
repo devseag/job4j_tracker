@@ -1,8 +1,5 @@
 package ru.job4j.bank;
 
-//import ru.job4j.bank.Account;
-//import ru.job4j.bank.User;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,9 +9,6 @@ public class BankService {
     private final Map<User, List<Account>> users = new HashMap<>();
 
     public void addUser(User user) {
-//        if (users.get(user) == null) {
-//            users.put(user, new ArrayList<Account>());
-//        }
         users.computeIfAbsent(user, k -> new ArrayList<Account>());
     }
 
@@ -29,25 +23,17 @@ public class BankService {
     }
 
     public void addAccount(String passport, Account account) {
-        List<Account> list = new ArrayList<>();
         User user = findByPassport(passport);
-        for (Account account1 : getAccounts(user)) {
-            if (!account1.equals(account)) {
-                list.add(account);
-                users.put(user, list);
+        if (getAccounts(user).size() > 0) {
+            for (Account account1 : getAccounts(user)) {
+                if (!account1.equals(account)) {
+                    getAccounts(user).add(account);
+                    break;
+                }
             }
+        } else if (getAccounts(user).size() == 0) {
+            getAccounts(user).add(account);
         }
-//        for (Map.Entry<User, List<Account>> entry : users.entrySet()) {
-//            if (entry.getKey().getPassport().equals(passport)) {
-//                for (Account account1 : entry.getValue()) {
-//                    if (!account1.equals(account)) {
-//                        List<Account> list = new ArrayList<>();
-//                        list.add(account);
-//                        users.put(entry.getKey(), list);
-//                    }
-//                }
-//            }
-//        }
     }
 
     public User findByPassport(String passport) {
@@ -60,7 +46,6 @@ public class BankService {
     }
 
     public Account findByRequisite(String passport, String requisite) {
-        List<Account> list = new ArrayList<>();
         User user = findByPassport(passport);
         if (user != null) {
             for (Account account1 : getAccounts(user)) {
@@ -69,21 +54,20 @@ public class BankService {
                 }
             }
         }
-//        for (Map.Entry<User, List<Account>> entry : users.entrySet()) {
-//            if (entry.getKey().equals(findByPassport(passport))) {
-//                for (Account account1 : entry.getValue()) {
-//                    if (account1.getRequisite().equals(requisite)) {
-//                        return account1;
-//                    }
-//                }
-//            }
-//        }
         return null;
     }
 
     public boolean transferMoney(String srcPassport, String srcRequisite,
                                  String destPassport, String destRequisite, double amount) {
         boolean rsl = false;
+        Account srcAccount = findByRequisite(srcPassport, srcRequisite);
+        Account destAccount = findByRequisite(destPassport, destRequisite);
+        if (srcAccount != null && destAccount != null) {
+            if (amount <= srcAccount.getBalance()) {
+                destAccount.setBalance(amount + destAccount.getBalance());
+                rsl = true;
+            }
+        }
         return rsl;
     }
 
