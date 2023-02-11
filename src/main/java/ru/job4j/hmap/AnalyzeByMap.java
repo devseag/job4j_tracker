@@ -66,7 +66,7 @@ public class AnalyzeByMap {
 //                if (map.containsKey(subject.name())) {
 //                    map.replace(subject.name(), subject.score() + map.get(subject.name()));
 //                } else {
-//                    map.put(subject.name(), subject.score() + map.get(subject.name()));
+//                    map.put(subject.name(), subject.score());
 //                }
                 map.merge(subject.name(), subject.score(), Integer::sum);
             }
