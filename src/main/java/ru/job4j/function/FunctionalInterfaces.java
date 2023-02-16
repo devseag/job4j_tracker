@@ -9,42 +9,24 @@ import java.util.function.*;
 public class FunctionalInterfaces {
     public static void main(String[] args) {
         Map<Integer, String> map = new HashMap<>();
-        BiConsumer<Integer, String> biCon = (s, s1) -> System.out.println(s + s1);
-        /*
-            Zamenite vstavku jelementov v kartu na ispol'zovanie BiConsumer, on uzhe ob#javlen, trebuetsja ego realizovat'.
-         */
-        map.put(1, "one");
-        map.put(2, "two");
-        map.put(3, "three");
-        map.put(4, "four");
-        map.put(5, "five");
-        map.put(6, "six");
-        map.put(7, "seven");
-
-        BiPredicate<Integer, String> biPred = ...;
+        List<String> list = List.of("one", "two", "three", "four", "five", "six", "seven");
+        BiConsumer<Integer, String> biCon = (i, s) -> map.put(i, s);
+        int i1 = 1;
+        for (String s1 : list) {
+            biCon.accept(i1++, s1);
+        }
+        BiPredicate<Integer, String> biPred = (i, s) -> i % 2 == 0 || s.length() == 4;
         for (Integer i : map.keySet()) {
-            /*
-                Zamenite proverku v if() na ispol'zovanie BiPredicate, on ob#javlen vyshe, trebuetsja ego realizovat'.
-             */
-            if (i % 2 == 0 || map.get(i).length() == 4) {
+            if (biPred.test(i, map.get(i))) {
                 System.out.println("key: " + i + " value: " + map.get(i));
             }
         }
-        /*
-            Zamenit' sozdanie ArrayList iz znachenij Map na Supplier, ob#javlen nizhe, trebuetsja ego realizovat'.
-         */
-        Supplier<List<String>> sup = ...;
-        List<String> strings = new ArrayList<>(map.values());
-
-        Consumer<String> con = ...;
-        Function<String, String> func = ...;
+        Supplier<List<String>> sup = () -> new ArrayList<>(map.values());
+        List<String> strings = sup.get();
+        Consumer<String> con = (s) -> System.out.println(s);
+        Function<String, String> func = s -> s.toUpperCase();
         for (String s : strings) {
-            /*
-                Zamenit' vyvod strok na primenenie Consumer
-                Zamenit' preobrazovanie strok k strokam v verhnem registre s pomoshh'ju Function
-                Neobhodimoe ob#javleno vyshe, trebuetsja ih realizovat'.
-            */
-            System.out.println(s.toUpperCase());
+            con.accept(func.apply(s));
         }
     }
 }
