@@ -25,4 +25,12 @@ public class StreamUsage {
                 .map(task -> task.name + " " + task.spent)
                 .forEach(System.out::println);
     }
+
+//    public List<Student> levelOf(List<Student> students, int bound) {
+//        return students.stream()
+//                .flatMap(Stream::ofNullable)
+//                .sorted()
+//                .filter(student -> student.getScore() > bound)
+//                .collect(Collectors.toList());
+//    }
 }
