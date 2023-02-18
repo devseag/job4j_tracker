@@ -23,12 +23,21 @@ public class JobSorter {
 //        System.out.println(jobs);
 //        jobs.sort(new SortDescByNameJob());
 //        System.out.println(jobs);
-        Collections.sort(jobs, new JobDescByName().thenComparing(new JobDescByPriority()));
+
+//        Collections.sort(jobs, new JobDescByName().thenComparing(new JobDescByPriority()));
+//        System.out.println(jobs);
+//        Comparator<Job> comb = new JobDescByNameLn()
+//                .thenComparing(new JobDescByName())
+//                .thenComparing(new JobDescByPriority());
+//        Collections.sort(jobs, comb);
+//        System.out.println(jobs);
+        jobs.sort(new JobDescByName().thenComparing(new JobDescByPriority()));
         System.out.println(jobs);
-        Comparator<Job> comb = new JobDescByNameLn()
-                .thenComparing(new JobDescByName())
-                .thenComparing(new JobDescByPriority());
-        Collections.sort(jobs, comb);
-        System.out.println(jobs);
+
+        Comparator<Job> compareName = Comparator.comparing(Job::getName);
+        Comparator<Job> comparePriority = Comparator.comparingInt(Job::getPriority);
+        Comparator<Job> combine = compareName.thenComparing(comparePriority);
+
+        jobs.sort(combine);
     }
 }
