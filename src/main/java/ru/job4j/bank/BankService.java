@@ -1,9 +1,6 @@
 package ru.job4j.bank;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Klass predstavljaet soboj jelementarnuju model' bankovskoj sistemy
@@ -76,6 +73,7 @@ public class BankService {
 //        }
 //        return null;
 //    }
+
     public User findByPassport(String passport) {
         return users.keySet()
                 .stream()
@@ -83,6 +81,28 @@ public class BankService {
                 .findFirst()
                 .orElse(null);
     }
+
+//    public User findByPassport(String passport) {
+//        User rsl = null;
+//        for (User user : users.keySet()) {
+//            if (user.getPassport().equals(passport)) {
+//                rsl = user;
+//                break;
+//            }
+//        }
+//        return rsl;
+//    }
+
+//    public Optional<User> findByPassport(String passport) {
+//        Optional<User> rsl = Optional.empty();
+//        for (User user : users.keySet()) {
+//            if (user.getPassport().equals(passport)) {
+//                rsl = Optional.of(user);
+//                break;
+//            }
+//        }
+//        return rsl;
+//    }
 
     /**
      * Metod nahodit i vozvrashhaet schet klienta
