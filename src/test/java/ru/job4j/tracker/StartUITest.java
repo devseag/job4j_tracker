@@ -2,6 +2,7 @@ package ru.job4j.tracker;
 
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,16 +10,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class StartUITest {
     @Test
-    public void whenCreateItem() {
+    public void whenCreateItem() throws SQLException {
         Output out = new StubOutput();
 //        Input in = new StubInput(
 //                new String[]{"0", "Item name", "1"}
 //        );
         Input in = new StubInput(new ArrayList<>(List.of("0", "Item name", "1")));
-        Tracker tracker = new Tracker();
+//        tracker tracker = new tracker();
+        MemTracker tracker = new MemTracker();
         List<UserAction> actions = new ArrayList<>();
         actions.add(new CreateAction(out));
-        actions.add(new Exit(out));
+        actions.add(new ExitAction(out));
 //        UserAction[] actions = {
 //                new CreateAction(out),
 //                new Exit(out)
@@ -29,9 +31,9 @@ public class StartUITest {
     }
 
     @Test
-    public void whenReplaceItem() {
+    public void whenReplaceItem() throws SQLException {
         Output out = new StubOutput();
-        Tracker tracker = new Tracker();
+        MemTracker tracker = new MemTracker();
         /* Dobavim v tracker novuju zajavku */
         Item item = tracker.add(new Item("Replaced item"));
         /* Vhodnye dannye dolzhny soderzhat' ID dobavlennoj zajavki item.getId() */
@@ -42,7 +44,7 @@ public class StartUITest {
         Input in = new StubInput(new ArrayList<>(List.of("0", String.valueOf(item.getId()), replacedName, "1")));
         List<UserAction> actions = new ArrayList<>();
         actions.add(new ReplaceAction(out));
-        actions.add(new Exit(out));
+        actions.add(new ExitAction(out));
 //        UserAction[] actions = {
 //                new ReplaceAction(out),
 //                new Exit(out)
@@ -52,9 +54,9 @@ public class StartUITest {
     }
 
     @Test
-    public void whenDeleteItem() {
+    public void whenDeleteItem() throws SQLException {
         Output out = new StubOutput();
-        Tracker tracker = new Tracker();
+        MemTracker tracker = new MemTracker();
         /* Dobavim v tracker novuju zajavku */
         Item item = tracker.add(new Item("Deleted item"));
         /* Vhodnye dannye dolzhny soderzhat' ID dobavlennoj zajavki item.getId() */
@@ -64,7 +66,7 @@ public class StartUITest {
         Input in = new StubInput(new ArrayList<>(List.of("0", String.valueOf(item.getId()), "1")));
         List<UserAction> actions = new ArrayList<>();
         actions.add(new DeleteAction(out));
-        actions.add(new Exit(out));
+        actions.add(new ExitAction(out));
 //        UserAction[] actions = {
 //                new DeleteAction(out),
 //                new Exit(out)
@@ -74,15 +76,15 @@ public class StartUITest {
     }
 
     @Test
-    public void whenExit() {
+    public void whenExit() throws SQLException {
         Output out = new StubOutput();
 //        Input in = new StubInput(
 //                new String[]{"0"}
 //        );
         Input in = new StubInput(new ArrayList<>(List.of("0")));
-        Tracker tracker = new Tracker();
+        MemTracker tracker = new MemTracker();
         List<UserAction> actions = new ArrayList<>();
-        actions.add(new Exit(out));
+        actions.add(new ExitAction(out));
 //        UserAction[] actions = {
 //                new Exit(out)
 //        };
@@ -95,9 +97,9 @@ public class StartUITest {
     }
 
     @Test
-    public void whenReplaceItemTestOutputIsSuccessfully() {
+    public void whenReplaceItemTestOutputIsSuccessfully() throws SQLException {
         Output out = new StubOutput();
-        Tracker tracker = new Tracker();
+        MemTracker tracker = new MemTracker();
         Item one = tracker.add(new Item("test1"));
         String replaceName = "New Test Name";
 //        Input in = new StubInput(
@@ -106,7 +108,7 @@ public class StartUITest {
         Input in = new StubInput(new ArrayList<>(List.of("0", String.valueOf(one.getId()), replaceName, "1")));
         List<UserAction> actions = new ArrayList<>();
         actions.add(new ReplaceAction(out));
-        actions.add(new Exit(out));
+        actions.add(new ExitAction(out));
 //        UserAction[] actions = new UserAction[]{
 //                new ReplaceAction(out),
 //                new Exit(out)
@@ -127,17 +129,17 @@ public class StartUITest {
     }
 
     @Test
-    public void whenFindAllActionTestOutputIsSuccessfully() {
+    public void whenFindAllActionTestOutputIsSuccessfully() throws SQLException {
         Output out = new StubOutput();
-        Tracker tracker = new Tracker();
+        MemTracker tracker = new MemTracker();
         Item one = tracker.add(new Item("test1"));
 //        Input in = new StubInput(
 //                new String[]{"0", String.valueOf(one.getId()), "1"}
 //        );
         Input in = new StubInput(new ArrayList<>(List.of("0", String.valueOf(one.getId()), "1")));
         List<UserAction> actions = new ArrayList<>();
-        actions.add(new ShowAllAction(out));
-        actions.add(new Exit(out));
+        actions.add(new FindAllAction(out));
+        actions.add(new ExitAction(out));
 //        UserAction[] actions = new UserAction[]{
 //                new ShowAllAction(out),
 //                new Exit(out)
@@ -158,9 +160,9 @@ public class StartUITest {
     }
 
     @Test
-    public void whenFindByNameActionOutputIsSuccessfully() {
+    public void whenFindByNameActionOutputIsSuccessfully() throws SQLException {
         Output out = new StubOutput();
-        Tracker tracker = new Tracker();
+        MemTracker tracker = new MemTracker();
         Item one = tracker.add(new Item("test1"));
         String findName = "test1";
 //        Input in = new StubInput(
@@ -168,8 +170,8 @@ public class StartUITest {
 //        );
         Input in = new StubInput(new ArrayList<>(List.of("0", findName, "1")));
         List<UserAction> actions = new ArrayList<>();
-        actions.add(new FindItemsbyNamesAction(out));
-        actions.add(new Exit(out));
+        actions.add(new FindByNameAction(out));
+        actions.add(new ExitAction(out));
 //        UserAction[] actions = new UserAction[]{
 //                new FindItemsbyNamesAction(out),
 //                new Exit(out)
@@ -190,9 +192,9 @@ public class StartUITest {
     }
 
     @Test
-    public void whenFindByIdActionOutputIsSuccessfully() {
+    public void whenFindByIdActionOutputIsSuccessfully() throws SQLException {
         Output out = new StubOutput();
-        Tracker tracker = new Tracker();
+        MemTracker tracker = new MemTracker();
         Item one = tracker.add(new Item("test1"));
         String findId = String.valueOf(one.getId());
 //        Input in = new StubInput(
@@ -200,8 +202,8 @@ public class StartUITest {
 //        );
         Input in = new StubInput(new ArrayList<>(List.of("0", findId, "1")));
         List<UserAction> actions = new ArrayList<>();
-        actions.add(new FindItembyIdAction(out));
-        actions.add(new Exit(out));
+        actions.add(new FindByIdAction(out));
+        actions.add(new ExitAction(out));
 //        UserAction[] actions = new UserAction[]{
 //                new FindItembyIdAction(out),
 //                new Exit(out)
@@ -222,15 +224,15 @@ public class StartUITest {
     }
 
     @Test
-    public void whenInvalidExit() {
+    public void whenInvalidExit() throws SQLException {
         Output out = new StubOutput();
 //        Input in = new StubInput(
 //                new String[]{"7", "0"}
 //        );
         Input in = new StubInput(new ArrayList<>(List.of("7", "0")));
-        Tracker tracker = new Tracker();
+        MemTracker tracker = new MemTracker();
         List<UserAction> actions = new ArrayList<>();
-        actions.add(new Exit(out));
+        actions.add(new ExitAction(out));
 //        UserAction[] actions = new UserAction[]{
 //                new Exit(out)
 //        };

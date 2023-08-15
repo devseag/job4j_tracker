@@ -1,5 +1,8 @@
 package ru.job4j.tracker;
 
+import ru.job4j.tracker.store.SqlTracker;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +13,7 @@ public class StartUI {
         this.out = out;
     }
 
-    public void init(Input input, Tracker tracker, List<UserAction> actions) {
+    public void init(Input input, Store store, List<UserAction> actions) throws SQLException {
         boolean run = true;
         while (run) {
             showMenu(actions);
@@ -20,7 +23,7 @@ public class StartUI {
                 continue;
             }
             UserAction action = actions.get(select);
-            run = action.execute(input, tracker);
+            run = action.execute(input, store);
         }
     }
 
@@ -38,18 +41,27 @@ public class StartUI {
 //        log.save();
         Output output = new ConsoleOutput();
         Input input = new ValidateInput(output, new ConsoleInput());
-        Tracker tracker = new Tracker();
-        List<UserAction> actions = new ArrayList<>() {
-            {
-                add(new CreateAction(output));
-                add(new ShowAllAction(output));
-                add(new ReplaceAction(output));
-                add(new DeleteAction(output));
-                add(new FindItembyIdAction(output));
-                add(new FindItemsbyNamesAction(output));
-                add(new Exit(output));
-            }
-        };
+//        Store tracker = new tracker();
+        try (Store tracker = new SqlTracker()) {
+//            List<UserAction> actions = new ArrayList<>() {
+//            {
+//                add(new CreateAction(output));
+//                add(new ShowAllAction(output));
+//                add(new ReplaceAction(output));
+//                add(new DeleteAction(output));
+//                add(new FindItembyIdAction(output));
+//                add(new FindItemsbyNamesAction(output));
+//                add(new Exit(output));
+//            }
+            List<UserAction> actions = List.of(
+                    new CreateAction(output),
+                    new ReplaceAction(output),
+                    new DeleteAction(output),
+                    new FindAllAction(output),
+                    new FindByIdAction(output),
+                    new FindByNameAction(output),
+                    new ExitAction(output)
+            );
 //        List<UserAction> actions = {
 //                new CreateAction(output),
 //                new ShowAllAction(output),
@@ -59,6 +71,10 @@ public class StartUI {
 //                new FindItemsbyNamesAction(output),
 //                new Exit(output)
 //        };
-        new StartUI(output).init(input, tracker, actions);
+//        new StartUI(output).init(input, tracker, actions);
+            new StartUI(output).init(input, tracker, actions);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
