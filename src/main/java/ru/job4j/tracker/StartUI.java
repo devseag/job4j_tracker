@@ -55,8 +55,10 @@ public class StartUI {
 //            }
             List<UserAction> actions = List.of(
                     new CreateAction(output),
+                    new CreateManyItems(output),
                     new ReplaceAction(output),
                     new DeleteAction(output),
+                    new DeleteAllItems(output),
                     new FindAllAction(output),
                     new FindByIdAction(output),
                     new FindByNameAction(output),
