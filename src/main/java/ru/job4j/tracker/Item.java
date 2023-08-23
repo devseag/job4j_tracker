@@ -56,12 +56,12 @@ public class Item {
 
     @Override
     public String toString() {
-//        return "Item{"
-//                + "id=" + id
-//                + ", name='" + name + '\''
-//                + ", created=" + created.format(FORMATTER)
-//                + '}';
-        return String.format("id: %s, name: %s, created: %s", id, name, FORMATTER.format(created));
+        return "Item{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", created=" + created.format(FORMATTER)
+                + '}';
+//        return String.format("id: %s, name: %s, created: %s", id, name, FORMATTER.format(created));
     }
 
     @Override
@@ -73,11 +73,11 @@ public class Item {
             return false;
         }
         Item item = (Item) o;
-        return id == item.id && Objects.equals(name, item.name);
+        return Objects.equals(name, item.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(name);
     }
 }
