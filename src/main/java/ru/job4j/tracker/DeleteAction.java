@@ -17,7 +17,8 @@ public class DeleteAction implements UserAction {
     public boolean execute(Input input, Store tracker) {
         out.println("=== Delete item ===");
         System.out.print("Enter id: ");
-        int id = Integer.parseInt(input.askStr("Enter id: "));
+//        int id = Integer.parseInt(input.askStr("Enter id: "));
+        int id = input.askInt("Enter id: ");
         if (tracker.delete(id)) {
             out.println("Item deleted successfully.");
         } else {
