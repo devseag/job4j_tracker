@@ -7,6 +7,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.Objects;
 
+import lombok.Data;
+
+@Data
 public class Item {
     private int id;
     private String name;
@@ -31,33 +34,34 @@ public class Item {
         this.created = created;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDateTime getCreated() {
-        return created;
-    }
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
+//
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public LocalDateTime getCreated() {
+//        return created;
+//    }
 
     @Override
     public String toString() {
-        return "Item{"
-                + "id=" + id
-                + ", name='" + name + '\''
-                + ", created=" + created.format(FORMATTER)
-                + '}';
+//        return "Item{"
+//                + "id=" + id
+//                + ", name='" + name + '\''
+//                + ", created=" + created.format(FORMATTER)
+//                + '}';
+        return String.format("id: %s, name: %s, created: %s", id, name, FORMATTER.format(created));
     }
 
     @Override
@@ -69,11 +73,11 @@ public class Item {
             return false;
         }
         Item item = (Item) o;
-        return Objects.equals(name, item.name);
+        return id == item.id && Objects.equals(name, item.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(id, name);
     }
 }
